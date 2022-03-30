@@ -51,7 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ProyectoCoder.urls'
-
+# C:/Users/SOFIPC/Documents/+ CODERHOUSE/clase_coder/Proyecto/AppCoder/templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
