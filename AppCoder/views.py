@@ -14,6 +14,9 @@ from AppCoder.forms import CursoFormulario, ProfesorFormulario
 
 #     return HttpResponse(documento)
 
+# def cursos(request):
+#     return render(request, "AppCoder/cursos.html")
+
 def cursos(request):
     if request.method == 'POST':
         miFormulario = CursoFormulario(request.POST) #acá llega toda la info del html
@@ -90,9 +93,6 @@ def eliminarProfesor(request, profesor_nombre):
                                 
 def inicio(request):
     return render(request, "AppCoder/inicio.html")
-
-def cursos(request):
-    return render(request, "AppCoder/cursos.html")
 
 def estudiantes(request):
     return render(request, "AppCoder/estudiantes.html")
