@@ -1,17 +1,18 @@
+import re
 from django.shortcuts import render
 from django.http import HttpResponse
 from AppCoder.models import Curso, Estudiante, Profesor
 from AppCoder.forms import CursoFormulario, ProfesorFormulario
 
 # Create your views here.
-# def curso(request):
-#     curso = Curso(nombre= "Desarrollo Web", camada = "11111")
+def curso(request):
+    curso = Curso(nombre= "Desarrollo Web", camada = "11111")
 
-#     curso.save()
+    curso.save()
 
-#     documento = f"El curso es: {curso.nombre}, la camada: {curso.camada}"
+    documento = f"El curso es: {curso.nombre}, la camada: {curso.camada}"
 
-#     return HttpResponse(documento)
+    return HttpResponse(documento)
 
 def cursoFormulario(request):
     if request.method == 'POST':
@@ -29,6 +30,24 @@ def cursoFormulario(request):
         miFormulario = CursoFormulario() #Formulario vacío para construir el html
     return render(request, "AppCoder/cursoFormulario.html", {"miFormulario": miFormulario})
 
+# Búsqueda camada
+def busquedaCamada(request):
+    return render(request, "AppCoder/busquedaCamada.html")
+def buscar(request):
+    # respuesta = f"Estoy buscando la camada nro {request.GET['camada'] }"
+    if request.GET["camada"]:
+        camada = request.GET["camada"]
+        cursos = Curso.objects.filter(camada__icontains=camada)
+
+        return render(request, "AppCoder/resultadosBusqueda.html", {"cursos":cursos, "camada": camada})
+    
+    else:
+        respuesta = "No enviaste datos"
+
+    return HttpResponse(respuesta)
+
+
+# PROFESORES
 def leerProfesores(request):
     profesores = Profesor.objects.all() #trae todos los profesores
     contexto = {"profesores": profesores}
@@ -64,10 +83,10 @@ def eliminarProfesor(request, profesor_nombre):
 
     return render(request, "AppCoder/leerProfesores.html", contexto)
 
-def editarProfesor(request, profesor_nombre):
-    profesor = Profesor.objects.get(nombre=profesor_nombre)
+# def editarProfesor(request, profesor_nombre):
+#     profesor = Profesor.objects.get(nombre=profesor_nombre)
 
-    if 
+#     if 
                                 
 def inicio(request):
     return render(request, "AppCoder/inicio.html")
