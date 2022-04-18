@@ -15,5 +15,5 @@ urlpatterns = [
 
     path('leerProfesores', views.leerProfesores, name="leerProfesores"),
     path('eliminarProfesor/<profesor_nombre>/', views.eliminarProfesor, name="EliminarProfesor"),
-    # path('editarProfesor/<profesor_nombre>/', views.editarProfesor, name="EditarProfesor"),
+    path('editarProfesor/<profesor_nombre>/', views.editarProfesor, name="EditarProfesor"),
 ]

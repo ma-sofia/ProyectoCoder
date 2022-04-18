@@ -86,10 +86,35 @@ def eliminarProfesor(request, profesor_nombre):
 
     return render(request, "AppCoder/leerProfesores.html", contexto)
 
-# def editarProfesor(request, profesor_nombre):
-#     profesor = Profesor.objects.get(nombre=profesor_nombre)
+def editarProfesor(request, profesor_nombre):
+    
+      #Recibe el nombre del profesor que vamos a modificar
+      profesor = Profesor.objects.get(nombre=profesor_nombre)
 
-#     if 
+      #Si es metodo POST hago lo mismo que el agregar
+      if request.method == 'POST':
+            miFormulario = ProfesorFormulario(request.POST) #aquí mellega toda la información del html
+            print(miFormulario)
+
+            if miFormulario.is_valid:   #Si pasó la validación de Django
+                  informacion = miFormulario.cleaned_data
+                  
+                  profesor.nombre = informacion['nombre']
+                  profesor.apellido = informacion['apellido']
+                  profesor.email = informacion['email']
+                  profesor.profesion = informacion['profesion']
+                  profesor.save()
+
+                  return render(request, "AppCoder/inicio.html") #Vuelvo al inicio o a donde quieran
+      #En caso que no sea post
+      else: 
+            #Creo el formulario con los datos que voy a modificar
+            miFormulario= ProfesorFormulario(initial={'nombre': profesor.nombre, 'apellido':profesor.apellido , 
+            'email':profesor.email, 'profesion':profesor.profesion}) 
+
+      #Voy al html que me permite editar
+      return render(request, "AppCoder/editarProfesor.html", {"miFormulario":miFormulario, "profesor_nombre":profesor_nombre})
+
                                 
 def inicio(request):
     return render(request, "AppCoder/inicio.html")
